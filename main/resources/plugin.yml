@@ -1,0 +1,23 @@
+name: MythicAssist
+version: '${project.version}'
+main: azuazu3939.mythicassist.MythicAssist
+api-version: 1.19
+
+commands:
+  ma:
+    description: "MythicAssistメインコマンド。"
+    permission: MythicAssist.command.ma
+
+permissions:
+  MythicAssist.*:
+    default: false
+    children:
+      - MythicAssist.command.*
+  MythicAssist.command.*:
+    default: false
+    children:
+      - MythicAssist.command.ma
+  MythicAssist.command.ma:
+    default: false
+
+
