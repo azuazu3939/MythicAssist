@@ -25,41 +25,31 @@ public class AssistCommand implements CommandExecutor, TabCompleter {
 
                 if (!player.hasPermission("MythicAssist.command.ma")) {
                     player.sendMessage(ChatColor.RED + "権限がありません。");
-                } else {
 
-                    if (reload(strings[0])) {
-                        player.sendMessage(ChatColor.GREEN + "コンフィグを保存しました。");
-                        return true;
-                    }
-                    if (create(strings[0], strings[1])) {
-                        player.sendMessage(ChatColor.GREEN + "新しく空のファイルを作成しました。");
-                        return true;
-                    }
-                    if (debug(strings[0], strings[1])) {
-                        player.sendMessage(ChatColor.GREEN + "成功。");
-                        return true;
-                    }
-                }
-            } else {
+                } else action(player, strings);
 
-                if (reload(strings[0])) {
-                    sender.sendMessage(ChatColor.GREEN + "コンフィグを保存しました。");
-                    return true;
-                }
-                if (create(strings[0], strings[1])) {
-                    sender.sendMessage(ChatColor.GREEN + "新しく空のファイルを作成しました。");
-                    return true;
-                }
-                if (debug(strings[0], strings[1])) {
-                    sender.sendMessage(ChatColor.GREEN + "成功。");
-                    return true;
-                }
-            }
+            } else action(sender, strings);
             return true;
+
         } catch (Exception e) {
             e.printStackTrace();
             sender.sendMessage(ChatColor.RED + "エラーが発生しました。");
             return true;
+        }
+    }
+
+    public void action(CommandSender sender, String @NotNull [] strings) {
+
+        if (reload(strings[0])) {
+            sender.sendMessage(ChatColor.GREEN + "コンフィグを保存しました。");
+            return;
+        }
+        if (create(strings[0], strings[1])) {
+            sender.sendMessage(ChatColor.GREEN + "新しく空のファイルを作成しました。");
+            return;
+        }
+        if (debug(strings[0], strings[1])) {
+            sender.sendMessage(ChatColor.GREEN + "成功。");
         }
     }
 
@@ -103,11 +93,7 @@ public class AssistCommand implements CommandExecutor, TabCompleter {
             if (sender instanceof Player player && player.hasPermission("MythicAssist.command.ma")) {
 
                 if (strings.length == 1) {
-                    List<String> list = new ArrayList<>();
-                    list.add("reload");
-                    list.add("create");
-                    list.add("debug");
-                    return list;
+                    return Arrays.asList("reload", "create", "debug");
                 }
 
                 if (strings[0].equalsIgnoreCase("debug") && strings.length == 2) {
